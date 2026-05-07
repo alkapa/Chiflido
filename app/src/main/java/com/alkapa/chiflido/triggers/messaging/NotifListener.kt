@@ -11,9 +11,9 @@ import com.alkapa.chiflido.core.AlertId
 import com.alkapa.chiflido.core.TriggerEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 /**
@@ -54,6 +54,8 @@ class NotifListener : NotificationListenerService() {
         )
 
         scope.launch {
+            // Switch global apaga el pipeline: no se evalúa, no se dispara.
+            if (!app.settings.serviceEnabled.first()) return@launch
             val spec = rule.evaluate(event) ?: return@launch
             Log.d(ChiflidoApp.TAG, "match key=${sbn.key} sev=${spec.severity}")
             app.alertEngine.fire(event.alertId, spec)

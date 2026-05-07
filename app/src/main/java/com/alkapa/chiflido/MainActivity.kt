@@ -89,7 +89,10 @@ class MainActivity : ComponentActivity() {
                         messagingViewModel = messagingViewModel,
                         serviceEnabled = serviceEnabled,
                         onServiceEnabledChange = { enabled ->
-                            lifecycleScope.launch { app.settings.setServiceEnabled(enabled) }
+                            lifecycleScope.launch {
+                                app.settings.setServiceEnabled(enabled)
+                                if (!enabled) app.alertEngine.silenceAll()
+                            }
                         },
                         onAddContact = { pickContactLauncher.launch(null) },
                         notifListenerGranted = notifGranted,
