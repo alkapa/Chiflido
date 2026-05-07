@@ -26,6 +26,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.alkapa.chiflido.data.WatchedContact
 import com.alkapa.chiflido.triggers.messaging.TargetApp
+import com.alkapa.chiflido.ui.battery.BatteryViewModel
 import com.alkapa.chiflido.ui.home.HomeScreen
 import com.alkapa.chiflido.ui.messaging.MessagingViewModel
 import com.alkapa.chiflido.ui.theme.ChiflidoTheme
@@ -34,6 +35,7 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
 
     private val messagingViewModel: MessagingViewModel by viewModels()
+    private val batteryViewModel: BatteryViewModel by viewModels()
 
     /**
      * Si el contact picker devolvió una Uri pero todavía no teníamos
@@ -87,6 +89,7 @@ class MainActivity : ComponentActivity() {
 
                     HomeScreen(
                         messagingViewModel = messagingViewModel,
+                        batteryViewModel = batteryViewModel,
                         serviceEnabled = serviceEnabled,
                         onServiceEnabledChange = { enabled ->
                             lifecycleScope.launch {

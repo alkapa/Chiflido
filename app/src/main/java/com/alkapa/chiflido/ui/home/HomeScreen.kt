@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.alkapa.chiflido.R
 import com.alkapa.chiflido.ui.battery.BatteryTab
+import com.alkapa.chiflido.ui.battery.BatteryViewModel
 import com.alkapa.chiflido.ui.messaging.MessagingTab
 import com.alkapa.chiflido.ui.messaging.MessagingViewModel
 
@@ -37,6 +38,7 @@ private enum class HomeTab { Messaging, Battery, Payments }
 @Composable
 fun HomeScreen(
     messagingViewModel: MessagingViewModel,
+    batteryViewModel: BatteryViewModel,
     serviceEnabled: Boolean,
     onServiceEnabledChange: (Boolean) -> Unit,
     onAddContact: () -> Unit,
@@ -90,6 +92,7 @@ fun HomeScreen(
                         contentPadding = androidx.compose.foundation.layout.PaddingValues(top = 8.dp),
                     )
                     HomeTab.Battery -> BatteryTab(
+                        viewModel = batteryViewModel,
                         contentPadding = androidx.compose.foundation.layout.PaddingValues(top = 8.dp),
                     )
                     HomeTab.Payments -> PaymentsPlaceholder()
