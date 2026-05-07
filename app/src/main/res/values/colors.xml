@@ -1,0 +1,8 @@
+<resources>
+    <!--
+        Colores estáticos para recursos XML que aún no usan dynamic-color.
+        La paleta vivencial está en `ui/theme/Color.kt`.
+    -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

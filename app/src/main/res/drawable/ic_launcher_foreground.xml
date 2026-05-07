@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Silbato estilizado: arco + punto, blanco sobre fondo cálido. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M40,46c-9.4,0 -17,7.6 -17,17s7.6,17 17,17s17,-7.6 17,-17v-9h22l11,-9V44L57,44V37L40,46zM40,73c-5.5,0 -10,-4.5 -10,-10s4.5,-10 10,-10s10,4.5 10,10S45.5,73 40,73z" />
+</vector>

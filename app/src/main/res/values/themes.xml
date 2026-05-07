@@ -1,0 +1,10 @@
+<resources>
+    <!--
+        Theme base para que el sistema (splash, ventanas previas a Compose, etc.)
+        tenga colores consistentes. La UI real se pinta con Material3 desde
+        Compose en `ui/theme/`.
+    -->
+    <style name="Theme.Chiflido" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+    </style>
+</resources>

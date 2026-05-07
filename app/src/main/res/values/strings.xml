@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Chiflido</string>
+
+    <!-- Permisos -->
+    <string name="permission_notif_listener_title">Falta permiso de Notificaciones</string>
+    <string name="permission_notif_listener_body">Chiflido necesita acceder a tus notificaciones para detectar mensajes importantes.</string>
+    <string name="permission_grant">Conceder</string>
+
+    <!-- Pantalla principal -->
+    <string name="tab_messaging">Mensajería</string>
+    <string name="tab_battery">Batería</string>
+    <string name="tab_payments">Pagos</string>
+    <string name="payments_coming_soon">Próximamente</string>
+    <string name="service_active">Servicio activo</string>
+
+    <!-- Mensajería -->
+    <string name="messaging_empty">Sin contactos vigilados. Toca el botón + para agregar uno.</string>
+    <string name="add_contact">Agregar contacto</string>
+    <string name="contact_app">App</string>
+    <string name="contact_min_importance">Importancia mínima</string>
+    <string name="contact_ignore_groups">Ignorar grupos</string>
+    <string name="contact_enabled">Habilitado</string>
+    <string name="contact_delete">Eliminar contacto</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save">Guardar</string>
+
+    <!-- Batería -->
+    <string name="battery_title">Alerta de batería baja</string>
+    <string name="battery_threshold_label">Disparar cuando la batería esté ≤ %1$d %%</string>
+    <string name="battery_help">La alerta se detendrá al conectar el cargador o tocar Silenciar.</string>
+
+    <!-- Alert Service -->
+    <string name="alert_channel_name">Alertas activas</string>
+    <string name="alert_channel_description">Notificación persistente mientras hay una alerta sonando.</string>
+    <string name="alert_active_single">%1$s</string>
+    <string name="alert_active_multiple">%1$d alertas activas</string>
+    <string name="alert_silence">Silenciar</string>
+</resources>
