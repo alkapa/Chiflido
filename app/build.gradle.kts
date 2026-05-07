@@ -84,6 +84,10 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.kotlinx.coroutines.android)
 
+    // Material Components (XML): provee Theme.Material3.* y atributos como
+    // ?attr/colorPrimary que usa el theme base en res/values/themes.xml.
+    implementation(libs.material)
+
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
 }
