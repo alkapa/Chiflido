@@ -4,6 +4,17 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Versión a publicar (ej. v0.1.0-rc1). Crea el tag y el release.'
+        required: true
+        type: string
+      prerelease:
+        description: 'Marcar como pre-release'
+        required: false
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -16,6 +27,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Resolve version
+        id: ver
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ inputs.version }}"
+          else
+            VERSION="${GITHUB_REF_NAME}"
+          fi
+          if [[ ! "$VERSION" =~ ^v ]]; then
+            echo "::error::La versión debe empezar con 'v' (recibí: $VERSION)"
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Versión resuelta: $VERSION"
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -50,17 +76,22 @@ jobs:
 
       - name: Stage APK with versioned name
         id: stage
+        env:
+          VERSION: ${{ steps.ver.outputs.version }}
         run: |
           mkdir -p out
           src=$(ls app/build/outputs/apk/release/*.apk | head -n1)
-          dst="out/chiflido-${GITHUB_REF_NAME}.apk"
+          dst="out/chiflido-${VERSION}.apk"
           cp "$src" "$dst"
           echo "apk_path=$dst" >> "$GITHUB_OUTPUT"
 
+      # softprops/action-gh-release crea el tag automáticamente si no existe
+      # cuando lo invoca un workflow_dispatch con tag_name explícito.
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
-          name: Chiflido ${{ github.ref_name }}
+          tag_name: ${{ steps.ver.outputs.version }}
+          name: Chiflido ${{ steps.ver.outputs.version }}
           generate_release_notes: true
+          prerelease: ${{ github.event_name == 'workflow_dispatch' && inputs.prerelease || contains(steps.ver.outputs.version, '-') }}
           files: ${{ steps.stage.outputs.apk_path }}
