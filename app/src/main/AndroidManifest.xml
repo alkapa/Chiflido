@@ -54,7 +54,16 @@
             </intent-filter>
         </service>
 
-        <!-- AlertService y BootReceiver se registran en pasos posteriores -->
+        <service
+            android:name=".service.AlertService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Persistent vibration alert until matched event is dismissed" />
+        </service>
+
+        <!-- BootReceiver se registra en el paso 12 -->
 
     </application>
 </manifest>
