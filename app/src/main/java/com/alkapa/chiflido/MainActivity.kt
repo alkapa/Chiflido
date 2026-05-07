@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,7 +23,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.core.app.NotificationManagerCompat
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.lifecycleScope
 import com.alkapa.chiflido.data.WatchedContact
 import com.alkapa.chiflido.triggers.messaging.TargetApp
@@ -85,7 +89,20 @@ class MainActivity : ComponentActivity() {
             ChiflidoTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     val serviceEnabled by app.settings.serviceEnabled.collectAsState(initial = true)
+
+                    // Re-evalúa el permiso de Notification Listener en cada
+                    // ON_RESUME para reflejar cambios al volver de Settings.
                     var notifGranted by remember { mutableStateOf(isNotifListenerGranted()) }
+                    val lifecycleOwner = LocalLifecycleOwner.current
+                    DisposableEffect(lifecycleOwner) {
+                        val observer = LifecycleEventObserver { _, event ->
+                            if (event == Lifecycle.Event.ON_RESUME) {
+                                notifGranted = isNotifListenerGranted()
+                            }
+                        }
+                        lifecycleOwner.lifecycle.addObserver(observer)
+                        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+                    }
 
                     HomeScreen(
                         messagingViewModel = messagingViewModel,
@@ -101,7 +118,6 @@ class MainActivity : ComponentActivity() {
                         notifListenerGranted = notifGranted,
                         onRequestNotifListener = {
                             startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
-                            notifGranted = isNotifListenerGranted()
                         },
                     )
                 }
@@ -126,7 +142,7 @@ class MainActivity : ComponentActivity() {
         messagingViewModel.addContact(
             WatchedContact(
                 name = displayName,
-                packageName = TargetApp.WHATSAPP.packageName,    // default sensato
+                packageName = TargetApp.WHATSAPP.packageName,
                 minImportance = 3,
                 ignoreGroups = true,
                 enabled = true,

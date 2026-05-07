@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.BatteryAlert
+import androidx.compose.material.icons.filled.Message
+import androidx.compose.material.icons.filled.Payment
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -112,17 +115,20 @@ private fun HomeTabs(
             selected = selected == HomeTab.Messaging,
             onClick = { onSelected(HomeTab.Messaging) },
             text = { Text(stringResource(R.string.tab_messaging)) },
+            icon = { Icon(Icons.Filled.Message, contentDescription = null) },
         )
         Tab(
             selected = selected == HomeTab.Battery,
             onClick = { onSelected(HomeTab.Battery) },
             text = { Text(stringResource(R.string.tab_battery)) },
+            icon = { Icon(Icons.Filled.BatteryAlert, contentDescription = null) },
         )
         Tab(
             selected = selected == HomeTab.Payments,
             onClick = { onSelected(HomeTab.Payments) },
             enabled = false,                  // habilitar cuando se implemente
             text = { Text(stringResource(R.string.tab_payments)) },
+            icon = { Icon(Icons.Filled.Payment, contentDescription = null) },
         )
     }
 }
