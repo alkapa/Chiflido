@@ -44,7 +44,17 @@
             </intent-filter>
         </activity>
 
-        <!-- Los services y receivers se agregan en pasos posteriores -->
+        <service
+            android:name=".triggers.messaging.NotifListener"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+        <!-- AlertService y BootReceiver se registran en pasos posteriores -->
 
     </application>
 </manifest>
